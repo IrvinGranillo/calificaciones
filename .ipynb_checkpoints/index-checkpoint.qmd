@@ -1,0 +1,69 @@
+---
+title: "Distribución de Calificaciones"
+format: html
+jupyter: python3
+---
+
+## Subir archivo y graficar
+
+```{python}
+#| echo: false
+import pandas as pd
+import plotly.express as px
+import panel as pn
+import io
+
+pn.extension("plotly")
+
+def cargar_y_graficar(file_bytes, filename):
+    if file_bytes is None or len(file_bytes) == 0:
+        return pn.pane.Markdown("📂 Sube un archivo CSV o Excel")
+    try:
+        buffer = io.BytesIO(file_bytes)
+
+        # Leer según extensión
+        if filename.endswith(".csv"):
+            df = pd.read_csv(buffer)
+        else:
+            df = pd.read_excel(buffer)
+
+        # Limpiar datos
+        columna_calif = "Calificación/10.00"
+        df_clean = df.dropna(subset=[columna_calif])
+        df_clean = df_clean[df_clean["Apellido(s)"] != "Promedio general"]
+
+        # Nombre completo
+        df_clean["Nombre completo"] = df_clean["Nombre"] + " " + df_clean["Apellido(s)"]
+
+        # Gráfica interactiva
+        fig = px.bar(
+            df_clean,
+            x="Nombre completo",
+            y=columna_calif,
+            title="Calificaciones por Estudiante",
+            color=columna_calif,
+            color_continuous_scale="Blues"
+        )
+        fig.update_layout(
+            xaxis_title="Estudiantes",
+            yaxis_title="Calificación",
+            xaxis_tickangle=-45,
+            plot_bgcolor="white"
+        )
+        return pn.pane.Plotly(fig, height=500)
+    except Exception as e:
+        return pn.pane.Markdown(f"Error: {e}")
+
+# Widget de subida
+file_input = pn.widgets.FileInput(accept=".csv,.xlsx")
+
+# Vincular correctamente: value (bytes) y filename (string)
+interactive = pn.bind(
+    cargar_y_graficar,
+    file_bytes=file_input.param.value,
+    filename=file_input.param.filename
+)
+
+# Mostrar interfaz
+pn.Column(file_input, interactive).servable()
+```

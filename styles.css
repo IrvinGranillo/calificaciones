@@ -1,0 +1,8 @@
+/* styles.css */
+body {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  background: linear-gradient(180deg,#f7fcff,#ffffff);
+  color: #0f2a2a;
+}
+h1, h2, h3 { color: #0b6b6b; }
+pre, code { background: #f4f7f8; border-radius: 8px; padding: 0.4rem; }

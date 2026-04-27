@@ -1,0 +1,41 @@
+---
+title: "Subir CSV y graficar"
+format: html
+jupyter: python3
+---
+
+### Subir y mostrar CSV
+
+```{python}
+# Dependencias
+import io
+import pandas as pd
+import ipywidgets as widgets
+from IPython.display import display, clear_output, HTML
+import plotly.express as px
+
+# Estilos CSS para la tabla (se aplica en el HTML renderizado)
+display(HTML("""
+<style>
+/* Tabla responsiva y con estilo */
+.dataframe {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  margin-top: 10px;
+}
+.dataframe th, .dataframe td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+.dataframe tr:nth-child(even){background-color: #f9f9f9;}
+.dataframe th {
+  background-color: #4CAF50;
+  color: white;
+}
+.upload-container {
+  margin-bottom: 12px;
+}
+</style>
+"""))

@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Irvin">
+
+<title>Analisis de calificaciones</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="in_files/libs/clipboard/clipboard.min.js"></script>
+<script src="in_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="in_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="in_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="in_files/libs/quarto-html/popper.min.js"></script>
+<script src="in_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="in_files/libs/quarto-html/anchor.min.js"></script>
+<link href="in_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="in_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="in_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="in_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="in_files/libs/bootstrap/bootstrap-4d7f0bce1131f3e5f9547cd857cfbfc8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+  
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analisis de calificaciones</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Irvin </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="1d413d33-8c70-4ee4-9733-41af71b8bb83" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>html</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script<span class="op">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  window.__define_backup <span class="op">=</span> window.define<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  window.define <span class="op">=</span> undefined<span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>script<span class="op">&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script src<span class="op">=</span><span class="st">"https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"</span><span class="op">&gt;&lt;/</span>script<span class="op">&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script src<span class="op">=</span><span class="st">"https://cdn.plot.ly/plotly-2.32.0.min.js"</span><span class="op">&gt;&lt;/</span>script<span class="op">&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script<span class="op">&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  window.define <span class="op">=</span> window.__define_backup<span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>script<span class="op">&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>div style<span class="op">=</span><span class="st">"font-family: Arial, sans-serif; margin-bottom:12px;"</span><span class="op">&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>b<span class="op">&gt;</span>Sube aquí tu archivo CSV:<span class="op">&lt;/</span>b<span class="op">&gt;&lt;</span>br<span class="op">&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span><span class="bu">input</span> <span class="bu">id</span><span class="op">=</span><span class="st">"csvFileInput"</span> <span class="bu">type</span><span class="op">=</span><span class="st">"file"</span> accept<span class="op">=</span><span class="st">".csv"</span> <span class="op">/&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>span <span class="bu">id</span><span class="op">=</span><span class="st">"status"</span> style<span class="op">=</span><span class="st">"margin-left:12px;color:#555;"</span><span class="op">&gt;&lt;/</span>span<span class="op">&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>div <span class="bu">id</span><span class="op">=</span><span class="st">"plotContainer"</span> style<span class="op">=</span><span class="st">"margin-top:20px;"</span><span class="op">&gt;&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>style<span class="op">&gt;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#plotContainer { width: 100%; max-width: 1100px; min-height: 300px; }</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>.progress { font<span class="op">-</span>size: <span class="fl">0.9</span><span class="er">em</span><span class="op">;</span> color:<span class="co">#666; margin-top:8px; }</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>style<span class="op">&gt;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script<span class="op">&gt;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="op">/*</span> Conversión segura a número <span class="op">*/</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>function toNumber(val) {</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (val <span class="op">===</span> null <span class="op">||</span> val <span class="op">===</span> undefined) <span class="cf">return</span> NaN<span class="op">;</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  const s <span class="op">=</span> String(val).trim().replace(<span class="op">/</span>\s<span class="op">+/</span>g,<span class="st">''</span>).replace(<span class="st">','</span>, <span class="st">'.'</span>)<span class="op">;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> parseFloat(s)<span class="op">;</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="op">/*</span> Encuentra índices de columnas esperadas <span class="op">*/</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>function findColumns(headers) {</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  const lower <span class="op">=</span> headers.<span class="bu">map</span>(h <span class="op">=&gt;</span> h.trim().toLowerCase())<span class="op">;</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  const idxNombre <span class="op">=</span> lower.indexOf(<span class="st">'nombre'</span>)<span class="op">;</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  const candidates <span class="op">=</span> [</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">'calificación/10.00'</span>,<span class="st">'calificacion/10.00'</span>,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">'calificación'</span>,<span class="st">'calificacion'</span>,</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">'calificación/10'</span>,<span class="st">'calificacion/10'</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  let idxCalif <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (const c of candidates) {</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    const i <span class="op">=</span> lower.indexOf(c)<span class="op">;</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i <span class="op">!==</span> <span class="op">-</span><span class="dv">1</span>) { idxCalif <span class="op">=</span> i<span class="op">;</span> <span class="cf">break</span><span class="op">;</span> }</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> { idxNombre, idxCalif }<span class="op">;</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="op">/*</span> Dibuja gráfica con Plotly <span class="op">*/</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>function drawPlot(names, values, title) {</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  const plotDiv <span class="op">=</span> document.getElementById(<span class="st">'plotContainer'</span>)<span class="op">;</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  plotDiv.innerHTML <span class="op">=</span> <span class="st">''</span><span class="op">;</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  const data <span class="op">=</span> [{ x: names, y: values, <span class="bu">type</span>: <span class="st">'bar'</span>, marker: { color: <span class="st">'#4CAF50'</span> } }]<span class="op">;</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  const layout <span class="op">=</span> {</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    title: title <span class="op">||</span> <span class="st">'Nombre vs Calificación/10.00'</span>,</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    xaxis: { tickangle: <span class="op">-</span><span class="dv">45</span>, automargin: true },</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    yaxis: { title: <span class="st">'Calificación / 10.00'</span> },</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    margin: { t: <span class="dv">60</span>, b: <span class="dv">160</span> },</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    height: <span class="dv">520</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>  Plotly.newPlot(<span class="st">'plotContainer'</span>, data, layout, {responsive: true})<span class="op">;</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="op">/*</span> Manejo <span class="kw">del</span> archivo <span class="op">*/</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>document.getElementById(<span class="st">'csvFileInput'</span>).addEventListener(<span class="st">'change'</span>, function(e) {</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>  const <span class="bu">file</span> <span class="op">=</span> e.target.files[<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>  const status <span class="op">=</span> document.getElementById(<span class="st">'status'</span>)<span class="op">;</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>  const plotDiv <span class="op">=</span> document.getElementById(<span class="st">'plotContainer'</span>)<span class="op">;</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>  plotDiv.innerHTML <span class="op">=</span> <span class="st">''</span><span class="op">;</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="bu">file</span>) { status.textContent <span class="op">=</span> <span class="st">''</span><span class="op">;</span> <span class="cf">return</span><span class="op">;</span> }</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>  <span class="op">//</span> Verificamos que las librerías existan en el entorno <span class="kw">global</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (typeof Plotly <span class="op">===</span> <span class="st">'undefined'</span> <span class="op">||</span> typeof Papa <span class="op">===</span> <span class="st">'undefined'</span>) {</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>      plotDiv.innerHTML <span class="op">=</span> <span class="st">'&lt;p style="color:darkred;"&gt;Error: Las librerías Plotly o PapaParse no se cargaron correctamente.&lt;/p&gt;'</span><span class="op">;</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>  status.textContent <span class="op">=</span> <span class="st">'Parseando con PapaParse...'</span><span class="op">;</span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>  const TOP_N <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>  const AGGREGATE_DUP <span class="op">=</span> true<span class="op">;</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>  const agg <span class="op">=</span> new Map()<span class="op">;</span></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>  let totalRows <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>  let headers <span class="op">=</span> null<span class="op">;</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>  Papa.parse(<span class="bu">file</span>, {</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>    header: true,</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>    skipEmptyLines: true,</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>    worker: true,</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>    chunkSize: <span class="dv">1024</span> <span class="op">*</span> <span class="dv">1024</span>,</span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>    chunk: function(results, parser) {</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="op">!</span>headers <span class="op">&amp;&amp;</span> results.meta <span class="op">&amp;&amp;</span> results.meta.fields) {</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>        headers <span class="op">=</span> results.meta.fields<span class="op">;</span></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>        const cols <span class="op">=</span> findColumns(headers)<span class="op">;</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (cols.idxNombre <span class="op">===</span> <span class="op">-</span><span class="dv">1</span> <span class="op">||</span> cols.idxCalif <span class="op">===</span> <span class="op">-</span><span class="dv">1</span>) {</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>          parser.abort()<span class="op">;</span></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>          plotDiv.innerHTML <span class="op">=</span> <span class="st">'&lt;p style="color:darkred;"&gt;El CSV debe contener las columnas &lt;b&gt;Nombre&lt;/b&gt; y &lt;b&gt;Calificación/10.00&lt;/b&gt;.&lt;/p&gt;'</span><span class="op">;</span></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>          status.textContent <span class="op">=</span> <span class="st">''</span><span class="op">;</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>          <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (const row of results.data) {</span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>        totalRows<span class="op">++;</span></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>        const keys <span class="op">=</span> Object.keys(row)<span class="op">;</span></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>        const nombreKey <span class="op">=</span> keys[findColumns(keys).idxNombre]<span class="op">;</span></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>        const califKey <span class="op">=</span> keys[findColumns(keys).idxCalif]<span class="op">;</span></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>        const nombre <span class="op">=</span> row[nombreKey] ?? row[keys[<span class="dv">0</span>]]<span class="op">;</span></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>        const califRaw <span class="op">=</span> row[califKey] ?? row[keys[findColumns(keys).idxCalif] ?? <span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>        const califNum <span class="op">=</span> toNumber(califRaw)<span class="op">;</span></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (nombre <span class="op">===</span> undefined <span class="op">||</span> nombre <span class="op">===</span> null) <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (isNaN(califNum)) <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>        const key <span class="op">=</span> String(nombre).trim()<span class="op">;</span></span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (AGGREGATE_DUP) {</span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>          const cur <span class="op">=</span> agg.get(key)<span class="op">;</span></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> (<span class="op">!</span>cur) agg.<span class="bu">set</span>(key, { <span class="bu">sum</span>: califNum, count: <span class="dv">1</span> })<span class="op">;</span></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>          <span class="cf">else</span> { cur.<span class="bu">sum</span> <span class="op">+=</span> califNum<span class="op">;</span> cur.count <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span> }</span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>          agg.<span class="bu">set</span>(key <span class="op">+</span> <span class="st">'___'</span> <span class="op">+</span> totalRows, { <span class="bu">sum</span>: califNum, count: <span class="dv">1</span>, label: key })<span class="op">;</span></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (totalRows <span class="op">%</span> <span class="dv">5000</span> <span class="op">===</span> <span class="dv">0</span>) status.textContent <span class="op">=</span> `Procesadas <span class="op">~</span>${totalRows} filas...`<span class="op">;</span></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>    complete: function() {</span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>      status.textContent <span class="op">=</span> <span class="st">'Finalizado. Preparando gráfica...'</span><span class="op">;</span></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>      const items <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (const [k, v] of agg.entries()) {</span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>        const label <span class="op">=</span> v.label <span class="op">||</span> k<span class="op">;</span></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>        const value <span class="op">=</span> (v.<span class="bu">sum</span> <span class="op">/</span> v.count)<span class="op">;</span></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>        items.push({ name: label, val: value })<span class="op">;</span></span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (items.length <span class="op">===</span> <span class="dv">0</span>) {</span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>        plotDiv.innerHTML <span class="op">=</span> <span class="st">'&lt;p style="color:darkred;"&gt;No hay datos válidos para graficar.&lt;/p&gt;'</span><span class="op">;</span></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>        status.textContent <span class="op">=</span> <span class="st">''</span><span class="op">;</span></span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>      items.sort((a,b) <span class="op">=&gt;</span> b.val <span class="op">-</span> a.val)<span class="op">;</span></span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>      const top <span class="op">=</span> items.<span class="bu">slice</span>(<span class="dv">0</span>, TOP_N)<span class="op">;</span></span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>      drawPlot(top.<span class="bu">map</span>(x<span class="op">=&gt;</span>x.name), top.<span class="bu">map</span>(x<span class="op">=&gt;</span>x.val), <span class="bu">file</span>.name <span class="op">+</span> <span class="st">' (top '</span> <span class="op">+</span> top.length <span class="op">+</span> <span class="st">')'</span>)<span class="op">;</span></span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>      status.textContent <span class="op">=</span> <span class="st">''</span><span class="op">;</span></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>    error: function(err) {</span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>      status.textContent <span class="op">=</span> <span class="st">''</span><span class="op">;</span></span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>      plotDiv.innerHTML <span class="op">=</span> <span class="st">'&lt;p style="color:darkred;"&gt;Error al leer el archivo con PapaParse: '</span> <span class="op">+</span> String(err) <span class="op">+</span> <span class="st">'&lt;/p&gt;'</span><span class="op">;</span></span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>script<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+
+<script>
+  window.__define_backup = window.define;
+  window.define = undefined;
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+
+<script>
+  window.define = window.__define_backup;
+</script>
+
+<div style="font-family: Arial, sans-serif; margin-bottom:12px;">
+  <b>Sube aquí tu archivo CSV:</b><br>
+  <input id="csvFileInput" type="file" accept=".csv">
+  <span id="status" style="margin-left:12px;color:#555;"></span>
+</div>
+<div id="plotContainer" style="margin-top:20px;"></div>
+
+<style>
+#plotContainer { width: 100%; max-width: 1100px; min-height: 300px; }
+.progress { font-size: 0.9em; color:#666; margin-top:8px; }
+</style>
+
+<script>
+/* Conversión segura a número */
+function toNumber(val) {
+  if (val === null || val === undefined) return NaN;
+  const s = String(val).trim().replace(/\s+/g,'').replace(',', '.');
+  return parseFloat(s);
+}
+
+/* Encuentra índices de columnas esperadas */
+function findColumns(headers) {
+  const lower = headers.map(h => h.trim().toLowerCase());
+  const idxNombre = lower.indexOf('nombre');
+  const candidates = [
+    'calificación/10.00','calificacion/10.00',
+    'calificación','calificacion',
+    'calificación/10','calificacion/10'
+  ];
+  let idxCalif = -1;
+  for (const c of candidates) {
+    const i = lower.indexOf(c);
+    if (i !== -1) { idxCalif = i; break; }
+  }
+  return { idxNombre, idxCalif };
+}
+
+/* Dibuja gráfica con Plotly */
+function drawPlot(names, values, title) {
+  const plotDiv = document.getElementById('plotContainer');
+  plotDiv.innerHTML = '';
+  const data = [{ x: names, y: values, type: 'bar', marker: { color: '#4CAF50' } }];
+  const layout = {
+    title: title || 'Nombre vs Calificación/10.00',
+    xaxis: { tickangle: -45, automargin: true },
+    yaxis: { title: 'Calificación / 10.00' },
+    margin: { t: 60, b: 160 },
+    height: 520
+  };
+  Plotly.newPlot('plotContainer', data, layout, {responsive: true});
+}
+
+/* Manejo del archivo */
+document.getElementById('csvFileInput').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  const status = document.getElementById('status');
+  const plotDiv = document.getElementById('plotContainer');
+  plotDiv.innerHTML = '';
+  if (!file) { status.textContent = ''; return; }
+
+  // Verificamos que las librerías existan en el entorno global
+  if (typeof Plotly === 'undefined' || typeof Papa === 'undefined') {
+      plotDiv.innerHTML = '<p style="color:darkred;">Error: Las librerías Plotly o PapaParse no se cargaron correctamente.</p>';
+      return;
+  }
+
+  status.textContent = 'Parseando con PapaParse...';
+  const TOP_N = 100;
+  const AGGREGATE_DUP = true;
+  const agg = new Map();
+  let totalRows = 0;
+  let headers = null;
+
+  Papa.parse(file, {
+    header: true,
+    skipEmptyLines: true,
+    worker: true,
+    chunkSize: 1024 * 1024,
+    chunk: function(results, parser) {
+      if (!headers && results.meta && results.meta.fields) {
+        headers = results.meta.fields;
+        const cols = findColumns(headers);
+        if (cols.idxNombre === -1 || cols.idxCalif === -1) {
+          parser.abort();
+          plotDiv.innerHTML = '<p style="color:darkred;">El CSV debe contener las columnas <b>Nombre</b> y <b>Calificación/10.00</b>.</p>';
+          status.textContent = '';
+          return;
+        }
+      }
+      for (const row of results.data) {
+        totalRows++;
+        const keys = Object.keys(row);
+        const nombreKey = keys[findColumns(keys).idxNombre];
+        const califKey = keys[findColumns(keys).idxCalif];
+        
+        const nombre = row[nombreKey] ?? row[keys[0]];
+        const califRaw = row[califKey] ?? row[keys[findColumns(keys).idxCalif] ?? 0];
+        const califNum = toNumber(califRaw);
+        
+        if (nombre === undefined || nombre === null) continue;
+        if (isNaN(califNum)) continue;
+        
+        const key = String(nombre).trim();
+        if (AGGREGATE_DUP) {
+          const cur = agg.get(key);
+          if (!cur) agg.set(key, { sum: califNum, count: 1 });
+          else { cur.sum += califNum; cur.count += 1; }
+        } else {
+          agg.set(key + '___' + totalRows, { sum: califNum, count: 1, label: key });
+        }
+      }
+      if (totalRows % 5000 === 0) status.textContent = `Procesadas ~${totalRows} filas...`;
+    },
+    complete: function() {
+      status.textContent = 'Finalizado. Preparando gráfica...';
+      const items = [];
+      for (const [k, v] of agg.entries()) {
+        const label = v.label || k;
+        const value = (v.sum / v.count);
+        items.push({ name: label, val: value });
+      }
+      if (items.length === 0) {
+        plotDiv.innerHTML = '<p style="color:darkred;">No hay datos válidos para graficar.</p>';
+        status.textContent = '';
+        return;
+      }
+      items.sort((a,b) => b.val - a.val);
+      const top = items.slice(0, TOP_N);
+      drawPlot(top.map(x=>x.name), top.map(x=>x.val), file.name + ' (top ' + top.length + ')');
+      status.textContent = '';
+    },
+    error: function(err) {
+      status.textContent = '';
+      plotDiv.innerHTML = '<p style="color:darkred;">Error al leer el archivo con PapaParse: ' + String(err) + '</p>';
+    }
+  });
+});
+</script>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
